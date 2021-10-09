@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.levelp.mysimplecrm.exception.WrongFormatException;
 
 @RestController
 @RequestMapping("/calc")
@@ -11,7 +12,13 @@ public class CalculatorController {
 
     @GetMapping("/sum/{value1}/{value2}")
     public String sum(@PathVariable("value1") double value1, @PathVariable("value2") double value2) {
-        return "Сумма введенных чисел = " + (value1 + value2);
+
+        try {
+            return "Сумма введенных чисел = " + (value1 + value2);
+        } catch (NumberFormatException e) {
+            throw new WrongFormatException();
+        }
+
     }
 
     @GetMapping("/diff/{value1}/{value2}")
