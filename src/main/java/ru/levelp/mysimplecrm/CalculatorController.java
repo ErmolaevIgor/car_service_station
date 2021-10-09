@@ -12,11 +12,6 @@ public class CalculatorController {
     @GetMapping("/sum/{value1}/{value2}")
     public String sum(@PathVariable("value1") double value1, @PathVariable("value2") double value2) {
         return "Сумма введенных чисел = " + (value1 + value2);
-//            if (value1 % 1 == 0 && value2 % 1 == 0) {
-//                return "Сумма введенных чисел = " + (value1 + value2);
-//            } else {
-//                return "Вы ввели не целое число!";
-//            }
     }
 
     @GetMapping("/diff/{value1}/{value2}")
