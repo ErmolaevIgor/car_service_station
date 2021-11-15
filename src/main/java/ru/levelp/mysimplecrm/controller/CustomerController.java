@@ -1,23 +1,52 @@
 package ru.levelp.mysimplecrm.controller;
 
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.levelp.mysimplecrm.CustomerRepository;
-import ru.levelp.mysimplecrm.entity.Customers;
+import ru.levelp.mysimplecrm.repository.CustomerRepo;
+import ru.levelp.mysimplecrm.model.Customers;
+import ru.levelp.mysimplecrm.utils.PaginationParams;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import static org.springframework.util.StringUtils.hasText;
+
+@AllArgsConstructor
 @Controller
-@RequestMapping("/customer")
+@RequestMapping({"/customers", ""})
 public class CustomerController {
 
-    private final CustomerRepository customerRepository;
+    private final CustomerRepo customerRepo;
 
-    public CustomerController(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    @GetMapping("")
+    public String index(@RequestParam(value = "page", required = false, defaultValue = "1") Integer pageParam,
+                        @RequestParam(value = "q", required = false, defaultValue = "") String query,
+                        Model model) {
+
+        PageRequest pageRequest = PageRequest.of(pageParam - 1, 10);
+
+        String queryString = query.trim();
+
+        Page<Customers> customers = hasText(queryString) ?
+                customerRepo.findContact(queryString, pageRequest)
+                : customerRepo.findAll(pageRequest);
+
+        model.addAttribute("customers", customers.stream().collect(Collectors.toList()));
+        model.addAttribute("query", query);
+
+        PaginationParams<Customers> paginationParams = new PaginationParams<>(customers);
+        model.addAllAttributes(paginationParams.getParams(pageParam));
+
+        return "customers";
     }
 
-    @PostMapping("/add")
+    @Transactional
+    @PostMapping
     public @ResponseBody String addNewCustomer (@RequestParam String name,
                                                 @RequestParam String email,
                                                 @RequestParam String phone)
@@ -26,40 +55,40 @@ public class CustomerController {
         customer.setName(name);
         customer.setEmail(email);
         customer.setPhone(phone);
-        customerRepository.save(customer);
+        customerRepo.save(customer);
         return "Новый клиент успешно сохранён!";
     }
 
     @GetMapping("/findAll")
     public @ResponseBody Iterable<Customers> getAllCustomers() {
-        return customerRepository.findAll();
+        return customerRepo.findAll();
     }
 
     @GetMapping("/findById")
-    public @ResponseBody Optional<Customers> findById(int id) {
-        return customerRepository.findById(id);
+    public @ResponseBody Optional<Customers> findById(long id) {
+        return customerRepo.findById(id);
     }
 
     @GetMapping("/findAllById")
-    public @ResponseBody Iterable<Customers> findAllById(Iterable<Integer> ids) {
-        return customerRepository.findAllById(ids);
+    public @ResponseBody Iterable<Customers> findAllById(Iterable<Long> ids) {
+        return customerRepo.findAllById(ids);
     }
 
     @GetMapping("/deleteById")
-    public @ResponseBody String deleteById(@ModelAttribute("id") int id) {
-        customerRepository.deleteById(id);
+    public @ResponseBody String deleteById(@ModelAttribute("id") long id) {
+        customerRepo.deleteById(id);
         return "Клиент по id " + id + " удалён!";
     }
 
     @GetMapping("/deleteAll")
         public @ResponseBody String deleteAll() {
-        customerRepository.deleteAll();
+        customerRepo.deleteAll();
         return "Все клиенты удалены!";
     }
 
     @GetMapping("/count")
     public @ResponseBody long count() {
-        return customerRepository.count();
+        return customerRepo.count();
     }
 
 }
