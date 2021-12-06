@@ -18,10 +18,10 @@ import static org.springframework.util.StringUtils.hasText;
 
 @AllArgsConstructor
 @Controller
-@RequestMapping({"/customers", ""})
+@RequestMapping({"/customers"})
 public class CustomerController {
 
-    private final CustomerRepo customerRepo;
+    private CustomerRepo customerRepo;
 
     @GetMapping("")
     public String index(@RequestParam(value = "page", required = false, defaultValue = "1") Integer pageParam,
@@ -46,7 +46,7 @@ public class CustomerController {
     }
 
     @Transactional
-    @PostMapping
+    @PostMapping("/addNewCustomer")
     public @ResponseBody String addNewCustomer (@RequestParam String name,
                                                 @RequestParam String email,
                                                 @RequestParam String phone)

@@ -10,7 +10,7 @@ import java.io.FileReader;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CustomerImport {
+public class DataImport {
 
     @SneakyThrows
     public static void main(String[] args) {
@@ -23,14 +23,14 @@ public class CustomerImport {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
-        CSVReader reader = new CSVReaderBuilder(new FileReader("C:\\Users\\ZeikF\\IdeaProjects\\my-simple-crm\\src\\main\\resources\\MOCK_DATA.csv"))
+        CSVReader reader = new CSVReaderBuilder(new FileReader("C:\\Users\\ZeikF\\IdeaProjects\\my-simple-crm\\src\\main\\resources\\customer_cars_data.csv"))
                 .withSkipLines(1)
                 .build();
 
         List<Object[]> params = reader.readAll().stream()
-                .map($ -> new Object[]{$[1], $[2], $[3]})
+                .map($ -> new Object[]{$[1], $[2], $[3], $[4], $[5], $[6], $[7]})
                 .collect(Collectors.toList());
-        jdbcTemplate.batchUpdate("insert into customers(name, email, phone) values (?, ?, ?)", params);
+        jdbcTemplate.batchUpdate("insert into customer_cars(vin_number, registration_number, brand, model, engine_modification, year_of_issue, mileage) values (?, ?, ?, ?, ?, ?, ?)", params);
 
     }
 }

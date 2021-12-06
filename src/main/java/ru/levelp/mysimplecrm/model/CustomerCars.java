@@ -13,6 +13,8 @@ public class CustomerCars {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_cars_id_seq")
+//    @SequenceGenerator(name = "customer_cars_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "vin_number")
@@ -31,9 +33,9 @@ public class CustomerCars {
     private String engineModification;
 
     @Column(name = "year_of_issue")
-    private Short yearOfIssue;
+    private String yearOfIssue;
 
     @Column(name = "mileage")
-    private Long mileage;
+    private String mileage;
 
 }
