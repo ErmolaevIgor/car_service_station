@@ -1,11 +1,10 @@
 package ru.levelp.mysimplecrm.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import ru.levelp.mysimplecrm.model.Users;
 
 import java.util.Optional;
 
-public interface UserRepo extends JpaRepository<Users, Long> {
-    Users findByEmail(String email);
-//    Optional<Users> findByEmail(String email);
+public interface UserRepo extends CrudRepository<Users, Long> {
+    Optional<Users> findUserByEmail(String email);
 }
