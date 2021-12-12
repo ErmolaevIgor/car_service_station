@@ -24,4 +24,9 @@ public class Customers {
 
     @Column(name = "phone")
     private String phone;
+
+    public Customers() {
+        super();
+    }
+
 }

@@ -36,4 +36,8 @@ public class CustomerCars {
     @Column(name = "mileage")
     private String mileage;
 
+    public CustomerCars() {
+        super();
+    }
+
 }

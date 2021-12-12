@@ -19,4 +19,8 @@ public class Users {
 
     private String password;
 
+    public Users() {
+        super();
+    }
+
 }
