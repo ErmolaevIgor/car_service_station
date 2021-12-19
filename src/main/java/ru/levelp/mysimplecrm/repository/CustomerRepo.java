@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 import ru.levelp.mysimplecrm.model.Customers;
 
 public interface CustomerRepo extends PagingAndSortingRepository<Customers, Long> {
-    @Query("select c from Customers c where c.name like concat('%', :query, '%') or c.name like concat('%', :query, '%')")
+    @Query("select c from Customers c where c.firstName like concat('%', :query, '%') or c.lastName like concat('%', :query, '%')")
     Page<Customers> findContact(@Param("query") String query, Pageable pageRequest);
 }

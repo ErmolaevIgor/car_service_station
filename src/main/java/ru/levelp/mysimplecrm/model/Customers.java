@@ -16,14 +16,24 @@ public class Customers {
     @SequenceGenerator(name = "customers_id_seq", allocationSize = 1)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
 
     @Column(name = "email")
     private String email;
 
     @Column(name = "phone")
     private String phone;
+
+    @ManyToOne
+    @Getter @Setter
+    private Gender gender;
+
+    @ManyToOne
+    private CustomerStatus status;
 
     public Customers() {
         super();

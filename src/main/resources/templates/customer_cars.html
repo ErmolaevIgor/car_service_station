@@ -29,6 +29,28 @@
 
     </script>
 
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(`#deleteById`).submit(function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: '/customer_cars/deleteById',
+                    method: 'GET',
+                    data: $('#deleteById form').serialize()
+                }).done(function() {
+                    $('#deleteById').modal('toggle')
+                    location.href = location.href;
+                }).fail(function() { alert('something went wrong')})
+
+            })
+
+            $('#deleteCustomer').click(function(e) {
+                $('#deleteById').submit();
+            })
+        })
+    </script>
+
 </head>
 <body>
 
@@ -60,11 +82,16 @@
 <div class="container">
 
     <div class="row" style="padding-top: 10px">
-        <div class="col-md-6">
-            <button class="btn btn-success" data-toggle="modal" data-target="#addCar">New car</button>
+
+        <div class="col-md-1">
+            <button class="btn btn-success" data-toggle="modal" data-target="#addCar">Add</button>
         </div>
 
-        <div class="col-md-6" style="text-align: right">
+        <div class="col-md-1">
+            <button class="btn btn-success" data-toggle="modal" data-target="#deleteById">Delete</button>
+        </div>
+
+        <div class="col-md-10" style="text-align: right">
             <form class="form-inline float-right">
                 <div class="form-group">
                     <input name="q" th:value="${query}" class="form-control mb-2" placeholder="Search">
@@ -117,7 +144,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Enter fields</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -127,14 +154,14 @@
                     <div class="form-group row">
                         <label for="vinNumber" class="col-md-4 col-form-label">Vin number:</label>
                         <div class="col-md-8">
-                            <input name="name" class="form-control" id="vinNumber" placeholder="vin number">
+                            <input name="vinNumber" class="form-control" id="vinNumber" placeholder="vin number">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="registrationNumber" class="col-md-4 col-form-label">Registration number:</label>
                         <div class="col-md-8">
-                            <input name="email" class="form-control" id="registrationNumber" placeholder="registration number">
+                            <input name="registrationNumber" class="form-control" id="registrationNumber" placeholder="registration number">
                         </div>
                     </div>
 
@@ -153,9 +180,9 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="engine_modification" class="col-md-4 col-form-label">Engine modification:</label>
+                        <label for="engineModification" class="col-md-4 col-form-label">Engine modification:</label>
                         <div class="col-md-8">
-                            <input name="engine_modification" class="form-control" id="engine_modification" placeholder="engine modification">
+                            <input name="engineModification" class="form-control" id="engineModification" placeholder="engine modification">
                         </div>
                     </div>
 
@@ -180,6 +207,36 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button id="saveCar" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteById" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">Enter id</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group row">
+                        <label for="id" class="col-md-4 col-form-label">Id:</label>
+                        <div class="col-md-8">
+                            <input name="id" class="form-control" id="id" placeholder="Id">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="deleteCustomer" type="button" class="btn btn-primary">Save changes</button>
             </div>
 
         </div>

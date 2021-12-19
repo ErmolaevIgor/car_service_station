@@ -3,12 +3,15 @@ package ru.levelp.mysimplecrm.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.levelp.mysimplecrm.repository.CustomerRepo;
 import ru.levelp.mysimplecrm.model.Customers;
+import ru.levelp.mysimplecrm.repository.CustomerStatusRepo;
+import ru.levelp.mysimplecrm.repository.GenderRepo;
 import ru.levelp.mysimplecrm.utils.PaginationParams;
 
 import java.util.Optional;
@@ -22,6 +25,8 @@ import static org.springframework.util.StringUtils.hasText;
 public class CustomerController {
 
     private CustomerRepo customerRepo;
+    private CustomerStatusRepo statusRepo;
+    private GenderRepo genderRepo;
 
     @GetMapping("")
     public String index(@RequestParam(value = "page", required = false, defaultValue = "1") Integer pageParam,
@@ -38,6 +43,7 @@ public class CustomerController {
 
         model.addAttribute("customers", customers.stream().collect(Collectors.toList()));
         model.addAttribute("query", query);
+        model.addAttribute("genders", genderRepo.findAll(Sort.by(Sort.Direction.ASC, "id")));
 
         PaginationParams<Customers> paginationParams = new PaginationParams<>(customers);
         model.addAllAttributes(paginationParams.getParams(pageParam));
@@ -47,15 +53,22 @@ public class CustomerController {
 
     @Transactional
     @PostMapping("/addNewCustomer")
-    public @ResponseBody String addNewCustomer (@RequestParam String name,
+    public @ResponseBody String addNewCustomer (@RequestParam String firstName,
+                                                @RequestParam String lastName,
                                                 @RequestParam String email,
-                                                @RequestParam String phone)
+                                                @RequestParam String phone,
+                                                @RequestParam Long genderId)
     {
         Customers customer = new Customers();
-        customer.setName(name);
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
         customer.setEmail(email);
         customer.setPhone(phone);
+        customer.setStatus(statusRepo.getOne(1L));
+        customer.setGender(genderRepo.getOne(genderId));
+
         customerRepo.save(customer);
+
         return "Новый клиент успешно сохранён!";
     }
 
