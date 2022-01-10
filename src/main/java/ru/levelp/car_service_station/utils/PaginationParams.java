@@ -1,4 +1,4 @@
-package ru.levelp.mysimplecrm.utils;
+package ru.levelp.car_service_station.utils;
 
 import org.springframework.data.domain.Page;
 

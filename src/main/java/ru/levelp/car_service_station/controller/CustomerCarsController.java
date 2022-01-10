@@ -1,4 +1,4 @@
-package ru.levelp.mysimplecrm.controller;
+package ru.levelp.car_service_station.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -6,9 +6,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.levelp.mysimplecrm.repository.CustomerCarsRepo;
-import ru.levelp.mysimplecrm.model.CustomerCars;
-import ru.levelp.mysimplecrm.utils.PaginationParams;
+import ru.levelp.car_service_station.repository.CustomerCarsRepo;
+import ru.levelp.car_service_station.model.CustomerCars;
+import ru.levelp.car_service_station.utils.PaginationParams;
 
 import javax.transaction.Transactional;
 import java.util.stream.Collectors;

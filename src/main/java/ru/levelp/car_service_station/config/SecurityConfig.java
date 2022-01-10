@@ -1,4 +1,4 @@
-package ru.levelp.mysimplecrm.config;
+package ru.levelp.car_service_station.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

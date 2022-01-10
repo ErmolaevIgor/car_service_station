@@ -1,4 +1,4 @@
-package ru.levelp.mysimplecrm.model;
+package ru.levelp.car_service_station.model;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,7 +1,7 @@
-package ru.levelp.mysimplecrm.repository;
+package ru.levelp.car_service_station.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import ru.levelp.mysimplecrm.model.Users;
+import ru.levelp.car_service_station.model.Users;
 
 import java.util.Optional;
 
