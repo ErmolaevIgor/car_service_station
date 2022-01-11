@@ -21,7 +21,7 @@ import static org.springframework.util.StringUtils.hasText;
 
 @AllArgsConstructor
 @Controller
-@RequestMapping({"/customers", ""})
+@RequestMapping({"/customers"})
 public class CustomerController {
 
     private CustomerRepo customerRepo;

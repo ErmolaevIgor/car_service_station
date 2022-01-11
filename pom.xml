@@ -9,15 +9,21 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ru.levelp</groupId>
-    <artifactId>my-simple-crm</artifactId>
+    <artifactId>car_service_station</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>my-simple-crm</name>
-    <description>my-simple-crm</description>
+    <name>car_service_station</name>
+    <description>car_service_station</description>
     <properties>
         <java.version>11</java.version>
         <testcontainers.version>1.16.0</testcontainers.version>
     </properties>
     <dependencies>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-devtools</artifactId>
+                <optional>true</optional>
+            </dependency>
 
         <dependency>
             <groupId>com.opencsv</groupId>
