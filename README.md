@@ -6,7 +6,7 @@
 1. Для старта проекта создайте БД PostgreSQL с именем car_service_station.
 В случае Docker можно использовать команду:
 ```
-docker run -it -e POSTGRES_DB=my_crm -p "5432:5432" postgres:9.6.14 
+docker run -it -e POSTGRES_DB=car_service_station -p "5432:5432" postgres:9.6.14 
 ```
 
 либо воспользуйтесь Docker-Compose:
